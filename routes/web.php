@@ -21,3 +21,7 @@ Route::resource('user', 'UserController', ['except' => ['update']]);
 
 Route::post('product/{id}', 'ProductController@update');
 Route::post('user/{id}', 'UserController@update');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
