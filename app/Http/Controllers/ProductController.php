@@ -18,8 +18,20 @@ class ProductController extends Controller
         return view('product.create');
     }
 
+      public function edit($id)
+    {
+        $product = Product::where('id', $id)->get();
+        return view('product.edit',['product' => $product[0]]);
+    }
+
     public function store(Request $request)
     {
+        Product::insert([
+            'name' => $request->nome,
+            'description' => $request->descricao,
+            'quantity' => $request->quantidade,
+            'price' => $request->preco
+        ]);
         return redirect()->route('product.index')->with('message', 'Produto salvo com sucesso!');
     }
 

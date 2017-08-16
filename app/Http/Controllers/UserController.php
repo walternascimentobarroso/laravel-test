@@ -17,9 +17,20 @@ class UserController extends Controller
     {
         return view('user.create');
     }
+
+    public function edit($id)
+    {
+        $user = User::where('id', $id)->get();
+        return view('user.edit',['user' => $user[0]]);
+    }
     
     public function store(Request $request)
     {
+        User::insert([
+            'name' => $request->nome,
+            'email' => $request->email,
+            'password' => $request->senha
+        ]);
         return redirect()->route('user.index')->with('message', 'Usuario salvo com sucesso!');
     }
 

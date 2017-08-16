@@ -28,9 +28,9 @@
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
-                                    <button class="btn btn-secondary">
+                                    <a class="btn btn-secondary" href="/user/{{ $user->id }}/edit">
                                         <i class="fa fa-pencil fa-lg text-warning" aria-hidden="true"></i>
-                                    </button>
+                                    </a>
                                     |
                                     <a class="btn btn-secondary" href="/user/{{ $user->id }}">
                                         <i class="fa fa-trash-o fa-lg text-danger"></i>
