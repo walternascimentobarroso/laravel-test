@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('product', 'ProductController');
+Route::resource('product', 'ProductController', ['except' => ['update']]);
 
-Route::resource('user', 'UserController');
+Route::resource('user', 'UserController', ['except' => ['update']]);
+
+Route::post('product/{id}', 'ProductController@update');
+Route::post('user/{id}', 'UserController@update');

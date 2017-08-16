@@ -35,6 +35,18 @@ class ProductController extends Controller
         return redirect()->route('product.index')->with('message', 'Produto salvo com sucesso!');
     }
 
+    public function update(Request $request, $id)
+    {
+         Product::where('id', $id)
+            ->update([
+            'name' => $request->nome,
+            'description' => $request->descricao,
+            'quantity' => $request->quantidade,
+            'price' => $request->price
+        ]);
+        return redirect()->route('product.index')->with('message', 'Usuario editado com sucesso!');
+    }
+
     public function show(Request $request, $id)
     {
         Product::where('id', $id)->delete();

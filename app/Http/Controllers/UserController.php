@@ -34,6 +34,17 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('message', 'Usuario salvo com sucesso!');
     }
 
+    public function update(Request $request, $id)
+    {
+         $r = User::where('id', $id)
+            ->update([
+            'name' => $request->nome,
+            'email' => $request->email,
+            'password' => $request->senha
+        ]);
+        return redirect()->route('user.index')->with('message', 'Usuario editado com sucesso!');
+    }
+
     public function show(Request $request, $id)
     {
         User::where('id', $id)->delete();

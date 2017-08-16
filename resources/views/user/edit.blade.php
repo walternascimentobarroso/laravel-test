@@ -3,7 +3,8 @@
 @section('title', 'Cadastro de Usuario')
 
 @section('container')
-          <form action="/user" method="post">
+          <form action="/user/{{ $user['id'] }}" method="post">
+            
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="hidden" name="id" value="{{ $user['id'] }}">
             <div class="form-group row">

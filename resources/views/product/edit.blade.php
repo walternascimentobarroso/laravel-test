@@ -3,7 +3,8 @@
 @section('title', 'Cadastro de Produto')
 
 @section('container')
-           <form action="/product" method="post">
+           <form action="/product/{{ $product['id'] }}" method="post">
+            
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="hidden" name="id" value="{{ $product['id'] }}">
             <div class="form-group row">
