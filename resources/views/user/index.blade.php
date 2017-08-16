@@ -1,6 +1,6 @@
 @extends('base')
 
-@section('title', 'Produtos')
+@section('title', 'Usuarios')
 
 @section('container')
             <div class="row">
@@ -17,20 +17,16 @@
                             <tr>
                                 <th>#</th>
                                 <th>Nome</th>
-                                <th>Descrição</th>
-                                <th>Quantidade</th>
-                                <th>Preço</th>
+                                <th>Email</th>
                                 <th>Ação</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($products as $product)
+                            @foreach ($users as $user)
                             <tr>
-                                <th scope="row">{{ $product->id }}</th>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ $product->description }}</td>
-                                <td>{{ $product->quantity }}</td>
-                                <td>{{ $product->price }}</td>
+                                <th scope="row">{{ $user->id }}</th>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
                                 <td>
                                     <button class="btn btn-secondary">
                                         <i class="fa fa-pencil fa-lg text-warning" aria-hidden="true"></i>
