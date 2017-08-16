@@ -3,6 +3,7 @@
 @section('title', 'Usuarios')
 
 @section('container')
+<h1 class="display-2">Usuarios</h1>
             <div class="row">
                 <div class="col">
                     <a class="btn btn-secondary" href="/user/create">

@@ -7,6 +7,11 @@ use App\User;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
    public function index()
     {
         $users = User::get();
@@ -29,7 +34,7 @@ class UserController extends Controller
         User::insert([
             'name' => $request->nome,
             'email' => $request->email,
-            'password' => $request->senha
+            'password' => bcrypt($request->senha)
         ]);
         return redirect()->route('user.index')->with('message', 'Usuario salvo com sucesso!');
     }
@@ -40,7 +45,7 @@ class UserController extends Controller
             ->update([
             'name' => $request->nome,
             'email' => $request->email,
-            'password' => $request->senha
+            'password' => bcrypt($request->senha)
         ]);
         return redirect()->route('user.index')->with('message', 'Usuario editado com sucesso!');
     }
