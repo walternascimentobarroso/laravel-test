@@ -12,4 +12,15 @@ class ProductController extends Controller
         $products = Product::get();
         return view('product.index',['products' => $products]);
     }
+
+    public function create()
+    {
+        return view('product.create');
+    }
+
+    public function store(Request $request)
+    {
+        var_dump($request->all());
+        return 'TRUE';
+    }
 }

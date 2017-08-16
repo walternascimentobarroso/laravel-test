@@ -5,9 +5,9 @@
 @section('container')
             <div class="row">
                 <div class="col">
-                    <button class="btn btn-secondary">
+                    <a class="btn btn-secondary" href="/product/create">
                         <i class="fa fa-plus fa-lg text-primary" aria-hidden="true"></i>
-                    </button>
+                    </a>
                 </div>
             </div>
             <div class="row">
