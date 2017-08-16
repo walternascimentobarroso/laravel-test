@@ -32,9 +32,9 @@
                                         <i class="fa fa-pencil fa-lg text-warning" aria-hidden="true"></i>
                                     </button>
                                     |
-                                    <button class="btn btn-secondary">
+                                    <a class="btn btn-secondary" href="/user/{{ $user->id }}">
                                         <i class="fa fa-trash-o fa-lg text-danger"></i>
-                                    </button>
+                                    </a>
                                 </td>
                             </tr>
                             @endforeach

@@ -20,6 +20,17 @@ class UserController extends Controller
     
     public function store(Request $request)
     {
+        return redirect()->route('user.index')->with('message', 'Usuario salvo com sucesso!');
+    }
+
+    public function show(Request $request, $id)
+    {
+        User::where('id', $id)->delete();
+        return redirect()->route('user.index')->with('message', 'Usuario' + $id + 'excluido com sucesso!');
+    }
+
+    public function destroy(Request $request)
+    {
         var_dump($request->all());
         return 'TRUE';
     }

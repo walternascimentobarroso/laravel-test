@@ -20,6 +20,17 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        return redirect()->route('product.index')->with('message', 'Produto salvo com sucesso!');
+    }
+
+    public function show(Request $request, $id)
+    {
+        Product::where('id', $id)->delete();
+        return redirect()->route('product.index')->with('message', 'Produto' + $id + 'excluido com sucesso!');
+    }
+
+    public function destroy(Request $request)
+    {
         var_dump($request->all());
         return 'TRUE';
     }
