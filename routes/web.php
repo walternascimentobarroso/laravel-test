@@ -25,3 +25,8 @@ Route::post('user/{id}', 'UserController@update');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => 'auth/github'], function(){
+    Route::get('/', 'GitHubController@redirect');
+    Route::get('callback', 'GitHubController@handle');
+});
