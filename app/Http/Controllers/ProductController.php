@@ -4,18 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ProductModel as Product;
+use App\Table\Table;
 
 class ProductController extends Controller
 {
-    public function __construct()
+    public function __construct(Table $table)
     {
+        $this->table = $table;
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
+        dd($this->table->model(Product::class)->search()->rows());
         $products = Product::get();
-        return view('product.index',['products' => $products]);
+        return view('product.index', ['products' => $products]);
     }
 
     public function create()
@@ -23,10 +26,10 @@ class ProductController extends Controller
         return view('product.create');
     }
 
-      public function edit($id)
+    public function edit($id)
     {
         $product = Product::where('id', $id)->get();
-        return view('product.edit',['product' => $product[0]]);
+        return view('product.edit', ['product' => $product[0]]);
     }
 
     public function store(Request $request)
@@ -48,7 +51,7 @@ class ProductController extends Controller
             'description' => $request->descricao,
             'quantity' => $request->quantidade,
             'price' => $request->price
-        ]);
+            ]);
         return redirect()->route('product.index')->with('message', 'Usuario editado com sucesso!');
     }
 

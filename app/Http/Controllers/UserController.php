@@ -11,11 +11,11 @@ class UserController extends Controller
     {
         $this->middleware('auth');
     }
-    
-   public function index()
+
+    public function index()
     {
         $users = User::get();
-        return view('user.index',['users' => $users]);
+        return view('user.index', ['users' => $users]);
     }
 
     public function create()
@@ -26,9 +26,9 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::where('id', $id)->get();
-        return view('user.edit',['user' => $user[0]]);
+        return view('user.edit', ['user' => $user[0]]);
     }
-    
+
     public function store(Request $request)
     {
         User::insert([
@@ -46,7 +46,7 @@ class UserController extends Controller
             'name' => $request->nome,
             'email' => $request->email,
             'password' => bcrypt($request->senha)
-        ]);
+            ]);
         return redirect()->route('user.index')->with('message', 'Usuario editado com sucesso!');
     }
 
