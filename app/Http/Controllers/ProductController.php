@@ -19,11 +19,11 @@ class ProductController extends Controller
         $this->table
         ->model(Product::class)
         ->columns([
-          ['label' => '#', 'name' => 'id'],
-          ['label' => 'Nome', 'name' => 'name'],
-          ['label' => 'Descrição', 'name' => 'description'],
-          ['label' => 'Quantidade', 'name' => 'quantity'],
-          ['label' => 'Preço', 'name' => 'price'],
+          ['label' => '#', 'name' => 'id', 'order' => true],
+          ['label' => 'Nome', 'name' => 'name', 'order' => true],
+          ['label' => 'Descrição', 'name' => 'description', 'order' => true],
+          ['label' => 'Quantidade', 'name' => 'quantity', 'order' => true],
+          ['label' => 'Preço', 'name' => 'price', 'order' => true],
         ])
         ->filters([
           [

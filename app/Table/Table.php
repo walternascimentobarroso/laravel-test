@@ -7,19 +7,19 @@ use Illuminate\Database\Eloquent\Builder;
 class Table
 {
     private $rows = [];
-    /**
-    * @var Builder
-    */
-    private $model = null;
-    private $modelOriginal = null;
     private $columns = [];
-    private $perPage = 2;
     private $actions = [];
     private $filters = [];
+    /**
+     * @var Builder
+     */
+    private $model = null;
+    private $modelOriginal = null;
+    private $perPage = 15;
 
     public function paginate($perPage)
     {
-        $this->perPage= $perPage;
+        $this->perPage = $perPage;
         return $this;
     }
 
@@ -55,15 +55,15 @@ class Table
 
     public function actions()
     {
-          return $this->actions;
+        return $this->actions;
     }
 
     public function addAction($label, $route, $template)
     {
-        $this->actions[]= [
-          'label' => $label,
-          'route' => $route,
-          'template' => $template,
+        $this->actions[] = [
+            'label' => $label,
+            'route' => $route,
+            'template' => $template
         ];
         return $this;
     }
@@ -80,13 +80,13 @@ class Table
         return $this;
     }
 
-
     public function search()
     {
         $keyName = $this->modelOriginal->getKeyName();
         $columns = collect($this->columns())->pluck('name')->toArray();
         array_unshift($columns, $keyName);
         $this->applyFilters();
+        $this->applyOrders();
         $this->rows = $this->model->paginate($this->perPage, $columns);
         return $this;
     }
@@ -98,7 +98,33 @@ class Table
             $operator = $filter['operator'];
             $search = \Request::get('search');
             $search = strtolower($operator) === 'like' ? "%$search%" : $search;
-            $this->model = $this->model->orWhere($field, $operator, $search);
+            if (!strpos($filter['name'], '.')) {
+                $this->model = $this->model->orWhere($field, $operator, $search);
+            } else {
+                list($relation,$field) = explode('.', $filter['name']);
+                $this->model = $this->model->orWhereHas($relation, function ($query) use ($field, $operator, $search) {
+                    $query->where($field, $operator, $search);
+                });
+            }
+            //WHERE campo = 'valor' OR campo = 'valor'
+        }
+    }
+
+    protected function applyOrders()
+    {
+        $fieldOrderParam = \Request::get('field_order');
+        $orderParam = \Request::get('order');
+        foreach ($this->columns() as $key => $column) {
+            if ($column['name'] === $fieldOrderParam && isset($column['order'])) {
+                $order = $orderParam =='desc'?'desc':'asc';
+                $this->columns[$key]['_order']=$order;
+                $this->model->orderBy("{$column['name']}", $order);
+            } elseif (isset($column['order'])) {
+                $this->columns[$key]['_order']=$column['order'];
+                if ($column['order'] === 'asc' || $column['order']==='desc') {
+                    $this->model->orderBy("{$column['name']}", $column['order']);
+                }
+            }
         }
     }
 }
