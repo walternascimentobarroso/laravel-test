@@ -16,9 +16,27 @@ class ProductController extends Controller
 
     public function index()
     {
-        dd($this->table->model(Product::class)->search()->rows());
-        $products = Product::get();
-        return view('product.index', ['products' => $products]);
+        $this->table
+        ->model(Product::class)
+        ->columns([
+          ['label' => '#', 'name' => 'id'],
+          ['label' => 'Nome', 'name' => 'name'],
+          ['label' => 'Descrição', 'name' => 'description'],
+          ['label' => 'Quantidade', 'name' => 'quantity'],
+          ['label' => 'Preço', 'name' => 'price'],
+        ])
+        ->filters([
+          [
+            'name' => 'description',
+            'operator' => 'LIKE'
+          ]
+        ])
+        ->addEditAction('product.edit')
+        ->addDeleteAction('product.destroy')
+        ->paginate(3)
+        ->search();
+        #$products = Product::get();
+        return view('product.index', ['table' => $this->table]);
     }
 
     public function create()
@@ -28,8 +46,9 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $product = Product::where('id', $id)->get();
-        return view('product.edit', ['product' => $product[0]]);
+        echo $id;
+        // $product = Product::where('id', $id)->get();
+        // return view('product.edit', ['product' => $product[0]]);
     }
 
     public function store(Request $request)
